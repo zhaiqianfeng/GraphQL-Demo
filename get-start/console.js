@@ -2,25 +2,32 @@
 
 var { graphql, buildSchema } = require('graphql');
 
+//定义schema
 var schema = buildSchema(`
-  type Query {
-    hello: String
-    user:User
-  },
-  type User{
-    name:String
-    intro:String
-  }
+    type User{
+        name: String
+        sex: String
+        intro: String
+    }
+    type Query {
+        user:User
+    }
 `);
 
-var root = {
-    hello: 'Hello world!',
-    user:{
-        name:'james',
-        intro:'This is a intro!'
+//定义服务端数据
+var root= {
+    user: {
+        name: 'zhaiqianfeng',
+        sex: '男',
+        intro: '博主，专注于Linux,Java,nodeJs,Web前端:Html5,JavaScript,CSS3'
     }
 };
 
-graphql(schema, '{ hello,user{name} }', root).then((response) => {
+graphql(schema, '{\
+        user{\
+            name\
+            intro\
+        }\
+    }', root).then((response) => {
     console.log(response);
 });
