@@ -23,6 +23,7 @@ var root= {
     }
 };
 
+//解析请求
 graphql(schema, '{\
         user{\
             name\
