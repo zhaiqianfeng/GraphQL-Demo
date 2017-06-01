@@ -10,6 +10,7 @@ var schema = buildSchema(`
         name: String
         sex: String
         intro: String
+        skills: [String]
     }
     type Query {
         user(id:Int!):User
@@ -21,12 +22,14 @@ var users=[
     {
         name: 'zhaiqianfeng',
         sex: '男',
-        intro: '博主，专注于Linux,Java,nodeJs,Web前端:Html5,JavaScript,CSS3'
+        intro: '博主，专注于Linux,Java,nodeJs,Web前端:Html5,JavaScript,CSS3',
+        skills: ['Linux','Java','nodeJs','前端']
     },
     {
         name: 'James',
         sex: '男',
-        intro: '英文名'
+        intro: 'zhaiqianfeng的英文名英文名',
+        skills: ['Linux','Java','nodeJs','前端']
     },
 ];
 
