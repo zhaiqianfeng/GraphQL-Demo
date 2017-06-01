@@ -5,7 +5,7 @@ var graphqlHTTP = require('express-graphql');
 var {
     GraphQLList,
     GraphQLObjectType,
-    buildSchema,
+    GraphQLSchema,
     GraphQLString,
     GraphQLInt,
     GraphQLFloat,
@@ -52,7 +52,7 @@ const Query=new GraphQLObjectType({
             }
         },
         users:{
-            type:[User],
+            type:new GraphQLList(User),
             description:'查询全部用户列表',
             resolve:function () {
                 return users;
@@ -80,9 +80,9 @@ const Mutation=new GraphQLObjectType({
         }
     }),
 });
-var schema = buildSchema({
-    query:Query,
-    mutation:Mutation
+const schema = new GraphQLSchema({
+    query: Query,
+    mutation: Mutation
 });
 
 var app = express();
