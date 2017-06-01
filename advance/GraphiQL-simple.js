@@ -7,14 +7,17 @@ var { buildSchema } = require('graphql');
 //定义schema
 var schema = buildSchema(`
     type User{
-        name: String
+        name: String!
         sex: String
         intro: String
-        skills: [String]
+        skills: [String]!
     }
     type Query {
         user(id:Int!):User
         users:[User]
+    }
+    type Mutation{
+        addUser(name:String!,sex:String,intro:String,skills:[String]!):User
     }
 `);
 
@@ -28,7 +31,7 @@ var users=[
     {
         name: 'James',
         sex: '男',
-        intro: 'zhaiqianfeng的英文名英文名',
+        intro: 'zhaiqianfeng的英文名',
         skills: ['Linux','Java','nodeJs','前端']
     },
 ];
@@ -40,6 +43,16 @@ var root= {
     },
     users: function () {
         return users;
+    },
+    addUser:function({name,sex,intro,skills}){
+        var user={
+            name:name,
+            sex:sex,
+            intro:intro,
+            skills:skills
+        };
+        users.push(user);
+        return user;
     }
 };
 
