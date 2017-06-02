@@ -20,26 +20,52 @@ var users=[
         name: 'zhaiqianfeng',
         sex: '男',
         intro: '博主，专注于Linux,Java,nodeJs,Web前端:Html5,JavaScript,CSS3',
-        skills: ['Linux','Java','nodeJs','前端']
+        skills: ['Linux','Java','nodeJs','前端'],
+        stature:180
     },
     {
         name: 'James',
         sex: '男',
         intro: 'zhaiqianfeng的英文名',
-        skills: ['Linux','Java','nodeJs','前端']
+        skills: ['Linux','Java','nodeJs','前端'],
+        stature:180
     },
 ];
 
 //定义schema
+const Unit=new GraphQLEnumType({
+    name:'Unit',
+    description:"单位",
+    values: {
+        MM: {value: 'MM'},
+        mm: {value: 'mm'},
+    }
+});
+
 const User=new GraphQLObjectType({
     name:'User',
     description:"用户信息实体",
-    fields:()=>({
-        name:{type:new GraphQLNonNull(GraphQLString)},
-        sex:{type:new GraphQLNonNull(GraphQLString)},
-        intro:{type:new GraphQLNonNull(GraphQLString)},
-        skills:{type:new GraphQLNonNull(new GraphQLList(GraphQLString))},
-    }),
+    fields: () => {
+        return ({
+            name: {type: new GraphQLNonNull(GraphQLString)},
+            sex: {type: new GraphQLNonNull(GraphQLString)},
+            intro: {type: new GraphQLNonNull(GraphQLString)},
+            skills: {type: new GraphQLNonNull(new GraphQLList(GraphQLString))},
+            stature: {
+                type: GraphQLFloat,
+                args: {
+                    unit: {type: Unit}
+                },
+                resolve: function (user, {unit}) {
+                    if (unit == 'MM') {
+                        return user.stature/100;
+                    } else {
+                        return user.stature;
+                    }
+                }
+            },
+        });
+    },
 });
 const  UserInput=new GraphQLInputObjectType({
     name:'UserInput',
@@ -49,6 +75,7 @@ const  UserInput=new GraphQLInputObjectType({
         sex:{type:new GraphQLNonNull(GraphQLString)},
         intro:{type:new GraphQLNonNull(GraphQLString)},
         skills:{type:new GraphQLNonNull(new GraphQLList(GraphQLString))},
+        stature:{type:Unit},
     }),
 });
 const Query=new GraphQLObjectType({
