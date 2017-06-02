@@ -1,4 +1,4 @@
-// get-start/GraphiQL.js
+// advance/GraphiQL.js
 
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
@@ -17,7 +17,7 @@ var {
 
 var users=[
     {
-        name: 'zhaiqianfeng',
+        name: null,
         sex: '男',
         intro: '博主，专注于Linux,Java,nodeJs,Web前端:Html5,JavaScript,CSS3',
         skills: ['Linux','Java','nodeJs','前端'],

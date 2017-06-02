@@ -1,4 +1,4 @@
-// get-start/GraphiQL.js
+// advance/GraphiQL.js
 
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
