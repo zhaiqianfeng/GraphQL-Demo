@@ -11,7 +11,8 @@ var {
     GraphQLFloat,
     GraphQLEnumType,
     GraphQLNonNull,
-    GraphQLInterfaceType
+    GraphQLInterfaceType,
+    GraphQLInputObjectType
 } = require('graphql');
 
 var users=[
@@ -40,6 +41,16 @@ const User=new GraphQLObjectType({
         skills:{type:new GraphQLNonNull(new GraphQLList(GraphQLString))},
     }),
 });
+const  UserInput=new GraphQLInputObjectType({
+    name:'UserInput',
+    description:"用户信息Input实体",
+    fields:()=>({
+        name:{type:new GraphQLNonNull(GraphQLString)},
+        sex:{type:new GraphQLNonNull(GraphQLString)},
+        intro:{type:new GraphQLNonNull(GraphQLString)},
+        skills:{type:new GraphQLNonNull(new GraphQLList(GraphQLString))},
+    }),
+});
 const Query=new GraphQLObjectType({
     name:'UserQuery',
     description:'用户信息查询',
@@ -47,6 +58,9 @@ const Query=new GraphQLObjectType({
         user:{
             type:User,
             description:'根据id查询单个用户',
+            args: {
+                id: {type: new GraphQLNonNull(GraphQLInt)}
+            },
             resolve:function (source,{id}) {
                 return users[id];
             }
@@ -67,12 +81,36 @@ const Mutation=new GraphQLObjectType({
         addUser:{
             type:User,
             description:'添加用户',
+            args: {
+                name:{type: new GraphQLNonNull(GraphQLString)},
+                sex:{type: new GraphQLNonNull(GraphQLString)},
+                intro:{type: new GraphQLNonNull(GraphQLString)},
+                skills:{type:new GraphQLList(new GraphQLNonNull(GraphQLString))}
+            },
             resolve:function (source,{name,sex,intro,skills}) {
                 var user={
                     name:name,
                     sex:sex,
                     intro:intro,
                     skills:skills
+                };
+                users.push(user);
+                return user;
+            }
+        },
+        addUserByInput:{
+            type:User,
+            description:'通过Input添加用户',
+            args: {
+                userInfo:{type: UserInput},
+            },
+            resolve:function (source,{userInfo}) {
+                console.log(userInfo);
+                var user={
+                    name:userInfo.name,
+                    sex:userInfo.sex,
+                    intro:userInfo.intro,
+                    skills:userInfo.skills
                 };
                 users.push(user);
                 return user;
