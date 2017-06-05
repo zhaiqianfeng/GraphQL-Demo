@@ -17,7 +17,7 @@ var {
 
 var users=[
     {
-        name: null,
+        name: "zhaiqiafneng",
         sex: '男',
         intro: '博主，专注于Linux,Java,nodeJs,Web前端:Html5,JavaScript,CSS3',
         skills: ['Linux','Java','nodeJs','前端'],

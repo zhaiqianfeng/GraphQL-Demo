@@ -12,44 +12,26 @@ var {
     GraphQLEnumType,
     GraphQLNonNull,
     GraphQLInterfaceType,
-    GraphQLInputObjectType
+    GraphQLInputObjectType,
+    GraphQLUnionType
 } = require('graphql');
 
 var animals=[
     {
-        name: 'dog',
+        chinaName: '狗狗',
         legs: 4
     },
     {
-        name: 'fish',
+        englishName: 'fish',
         tailColor:'red'
     },
 ];
 
-//定义schema
-const Animal = new GraphQLInterfaceType({
-    name: 'Animal',
-    description: '接口',
-    fields: () => ({
-        name: {type: new GraphQLNonNull(GraphQLString)},
-    }),
-   /* resolveType:function (obj) {
-        if(obj.legs) {
-            return Dog;
-        }else if(obj.tailColor){
-            return Fish;
-        }else{
-            return null;
-        }
-    }*/
-});
-
 const Dog = new GraphQLObjectType({
     name: 'Dog',
-    interfaces: [Animal],
     description: '狗狗实体',
     fields: () => ({
-        name: {type: new GraphQLNonNull(GraphQLString)},
+        chinaName: {type: new GraphQLNonNull(GraphQLString)},
         legs: {type: new GraphQLNonNull(GraphQLInt)},
     }),
     isTypeOf:obj=>obj.legs,
@@ -57,16 +39,33 @@ const Dog = new GraphQLObjectType({
 
 const Fish=new GraphQLObjectType({
     name:'Fish',
-    interfaces:[Animal],
     description:"鱼儿实体",
     fields: () => {
         return ({
-            name: {type: new GraphQLNonNull(GraphQLString)},
+            englishName: {type: new GraphQLNonNull(GraphQLString)},
             tailColor: {type: new GraphQLNonNull(GraphQLString)},
         });
     },
     isTypeOf:obj=>obj.tailColor,
 });
+
+//定义schema
+const Animal = new GraphQLUnionType({
+    name: 'Animal',
+    description: 'Union',
+    types:[Dog,Fish],
+   resolveType:function (obj) {
+        if(obj.legs) {
+            return Dog;
+        }else if(obj.tailColor){
+            return Fish;
+        }else{
+            return null;
+        }
+    }
+});
+
+
 const Query=new GraphQLObjectType({
     name:'AnimalQuery',
     description:'动物信息查询',
@@ -76,19 +75,6 @@ const Query=new GraphQLObjectType({
             description:'查询全部动物列表',
             resolve:function () {
                 return animals;
-            }
-        },
-        animalSearch:{
-            type:Animal,
-            args: {
-                text: {type: new GraphQLNonNull(GraphQLString)}
-            },
-            resolve:function (source,{text}) {
-                if (text == 'dog') {
-                    return animals[0];
-                }else{
-                    return animals[1];
-                }
             }
         }
     }),
