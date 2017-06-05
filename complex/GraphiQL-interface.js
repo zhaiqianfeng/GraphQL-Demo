@@ -2,26 +2,18 @@
 
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
-var { buildSchema } = require('graphql');
-
-//定义schema
-var schema = buildSchema(`
-    interface Animal{
-        name: String!
-    }
-    type Dog implements Animal{
-        name: String!
-        legs: Int!
-    }
-    type Fish implements Animal{
-        name: String!
-        tailColor: String!
-    }
-    
-    type Query {
-        animal:Animal
-    }
-`);
+var {
+    GraphQLList,
+    GraphQLObjectType,
+    GraphQLSchema,
+    GraphQLString,
+    GraphQLInt,
+    GraphQLFloat,
+    GraphQLEnumType,
+    GraphQLNonNull,
+    GraphQLInterfaceType,
+    GraphQLInputObjectType
+} = require('graphql');
 
 var animals=[
     {
@@ -34,17 +26,68 @@ var animals=[
     },
 ];
 
-//定义服务端数据
-var root= {
-    animal: function () {
-        return animals;
+//定义schema
+const Animal = new GraphQLInterfaceType({
+    name: 'Animal',
+    description: '接口',
+    fields: () => ({
+        name: {type: new GraphQLNonNull(GraphQLString)},
+    }),
+    resolveType:function (obj) {
+        if(obj.legs) {
+            return Dog;
+        }else if(obj.tailColor){
+            return Fish;
+        }else{
+            return null;
+        }
     }
-};
+});
+
+const Dog = new GraphQLObjectType({
+    name: 'Dog',
+    interfaces: [Animal],
+    description: '狗狗实体',
+    fields: () => ({
+        name: {type: new GraphQLNonNull(GraphQLString)},
+        legs: {type: new GraphQLNonNull(GraphQLInt)},
+    }),
+    // isTypeOf:obj=>obj.legs,
+});
+
+const Fish=new GraphQLObjectType({
+    name:'Fish',
+    interfaces:[Animal],
+    description:"鱼儿实体",
+    fields: () => {
+        return ({
+            name: {type: new GraphQLNonNull(GraphQLString)},
+            tailColor: {type: new GraphQLNonNull(GraphQLString)},
+        });
+    },
+    // isTypeOf:obj=>obj.tailColor,
+});
+const Query=new GraphQLObjectType({
+    name:'AnimalQuery',
+    description:'动物信息查询',
+    fields:()=>({
+        animals:{
+            type:new GraphQLList(Animal),
+            description:'查询全部动物列表',
+            resolve:function () {
+                return animals;
+            }
+        }
+    }),
+});
+const schema = new GraphQLSchema({
+    types: [Dog, Fish,Animal],
+    query: Query
+});
 
 var app = express();
 app.use('/graphql', graphqlHTTP({
     schema: schema,
-    rootValue: root,
     graphiql: true, //启用GraphiQL
 }));
 
