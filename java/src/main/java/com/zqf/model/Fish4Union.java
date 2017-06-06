@@ -3,9 +3,9 @@ package com.zqf.model;
 /**
  * Created by james on 6/6/17.
  */
-public class Dog {
+public class Fish4Union {
     private String name;
-    private int legs;
+    private String tailColor;
 
     public String getName() {
         return name;
@@ -15,11 +15,11 @@ public class Dog {
         this.name = name;
     }
 
-    public int getLegs() {
-        return legs;
+    public String getTailColor() {
+        return tailColor;
     }
 
-    public void setLegs(int legs) {
-        this.legs = legs;
+    public void setTailColor(String tailColor) {
+        this.tailColor = tailColor;
     }
 }

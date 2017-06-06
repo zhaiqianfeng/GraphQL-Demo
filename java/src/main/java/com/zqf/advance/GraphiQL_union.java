@@ -1,7 +1,7 @@
 package com.zqf.advance;
 
-import com.zqf.model.Dog;
-import com.zqf.model.Fish;
+import com.zqf.model.Dog4Union;
+import com.zqf.model.Fish4Union;
 import graphql.GraphQL;
 import graphql.schema.GraphQLList;
 import graphql.schema.GraphQLObjectType;
@@ -21,11 +21,11 @@ import static graphql.schema.GraphQLUnionType.newUnionType;
  */
 public class GraphiQL_union {
     public static void main(String[] args) {
-        Dog dog=new Dog();
+        Dog4Union dog=new Dog4Union();
         dog.setName("dog");
         dog.setLegs(4);
 
-        Fish fish=new Fish();
+        Fish4Union fish=new Fish4Union();
         fish.setName("fish");
         fish.setTailColor("red");
 
@@ -33,14 +33,14 @@ public class GraphiQL_union {
 
         //定义Dog实体
         GraphQLObjectType dogType = newObject()
-                .name("Dog")
+                .name("Dog4Union")
                 .field(newFieldDefinition().name("name").type(GraphQLString))
                 .field(newFieldDefinition().name("legs").type(GraphQLInt))
                 .build();
 
         //定义Fish实体
         GraphQLObjectType fishType = newObject()
-                .name("Fish")
+                .name("Fish4Union")
                 .field(newFieldDefinition().name("name").type(GraphQLString))
                 .field(newFieldDefinition().name("tailColor").type(GraphQLString))
                 .build();
@@ -52,9 +52,9 @@ public class GraphiQL_union {
                 .possibleType(fishType)
                 .description("动物联合")
                 .typeResolver(env -> {
-                    if(env.getObject() instanceof Dog){
+                    if(env.getObject() instanceof Dog4Union){
                         return dogType;
-                    }if(env.getObject() instanceof Fish){
+                    }if(env.getObject() instanceof Fish4Union){
                         return fishType;
                     }
                     return  null;
@@ -80,7 +80,7 @@ public class GraphiQL_union {
         GraphQL graphQL = GraphQL.newGraphQL(schema).build();
 
         //查询动物列表
-        Map<String, Object> result = graphQL.execute("{animals{... on Dog{name,legs} ... on Fish{name,tailColor}}}").getData();
+        Map<String, Object> result = graphQL.execute("{animals{... on Dog4Union{name,legs} ... on Fish4Union{name,tailColor}}}").getData();
         System.out.println(result);
     }
 }
