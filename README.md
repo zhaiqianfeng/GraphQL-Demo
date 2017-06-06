@@ -1,6 +1,6 @@
-本代码用于博文演示：<a href="http://www.zhaiqianfeng.com/tags/GraphQL/" target="_blank"></a>
+本代码用于博文演示：<a href="http://www.zhaiqianfeng.com/tags/GraphQL/" target="_blank">http://www.zhaiqianfeng.com/tags/GraphQL/</a>
 ```
-├── java		java版本实现
+├── java	java版本实现
 └── javascript	javascript版本实现
 ```
 ps
