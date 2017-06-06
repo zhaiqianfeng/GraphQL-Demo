@@ -1,4 +1,4 @@
-// advance/GraphiQL.js
+// advance/GraphiQL-simple.js
 
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
@@ -28,6 +28,7 @@ var schema = buildSchema(`
     }
 `);
 
+//服务端示例数据
 var users=[
     {
         name: 'zhaiqianfeng',
@@ -43,14 +44,16 @@ var users=[
     },
 ];
 
-//定义服务端数据
+//定义resolver
 var root= {
+    // query resolver
     user: function ({id}) {
         return users[id];
     },
     users: function () {
         return users;
     },
+    //mutation resolver
     addUser:function({name,sex,intro,skills}){
         var user={
             name:name,

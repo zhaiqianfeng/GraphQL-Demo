@@ -1,4 +1,4 @@
-// advance/GraphiQL.js
+// advance/GraphiQL-union.js
 
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
@@ -16,6 +16,7 @@ var {
     GraphQLUnionType
 } = require('graphql');
 
+//服务端示例数据
 var animals=[
     {
         chinaName: '狗狗',
@@ -27,6 +28,7 @@ var animals=[
     },
 ];
 
+//定义schema及resolver
 const Dog = new GraphQLObjectType({
     name: 'Dog',
     description: '狗狗实体',
@@ -49,7 +51,6 @@ const Fish=new GraphQLObjectType({
     isTypeOf:obj=>obj.tailColor,
 });
 
-//定义schema
 const Animal = new GraphQLUnionType({
     name: 'Animal',
     description: 'Union',

@@ -1,4 +1,4 @@
-// advance/GraphiQL.js
+// advance/GraphiQL-interface.js
 
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
@@ -15,6 +15,7 @@ var {
     GraphQLInputObjectType
 } = require('graphql');
 
+//服务端示例数据
 var animals=[
     {
         name: 'dog',
@@ -26,7 +27,7 @@ var animals=[
     },
 ];
 
-//定义schema
+//定义schema及resolver
 const Animal = new GraphQLInterfaceType({
     name: 'Animal',
     description: '接口',

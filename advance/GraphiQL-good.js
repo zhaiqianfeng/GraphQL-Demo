@@ -1,4 +1,4 @@
-// advance/GraphiQL.js
+// advance/GraphiQL-good.js
 
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
@@ -15,6 +15,7 @@ var {
     GraphQLInputObjectType
 } = require('graphql');
 
+//服务端示例数据
 var users=[
     {
         name: "zhaiqiafneng",
@@ -32,7 +33,7 @@ var users=[
     },
 ];
 
-//定义schema
+//定义schema及resolver
 const Unit=new GraphQLEnumType({
     name:'Unit',
     description:"单位",
