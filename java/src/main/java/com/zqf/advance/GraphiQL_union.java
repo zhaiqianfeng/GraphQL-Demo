@@ -3,8 +3,10 @@ package com.zqf.advance;
 import com.zqf.model.Dog;
 import com.zqf.model.Fish;
 import graphql.GraphQL;
-import graphql.TypeResolutionEnvironment;
-import graphql.schema.*;
+import graphql.schema.GraphQLList;
+import graphql.schema.GraphQLObjectType;
+import graphql.schema.GraphQLSchema;
+import graphql.schema.GraphQLUnionType;
 
 import java.util.Map;
 
@@ -49,30 +51,26 @@ public class GraphiQL_union {
                 .possibleType(dogType)
                 .possibleType(fishType)
                 .description("动物联合")
-                .typeResolver(new TypeResolver() {
-                    @Override
-                    public GraphQLObjectType getType(TypeResolutionEnvironment env) {
-                        if(env.getObject() instanceof Dog){
-                            return dogType;
-                        }if(env.getObject() instanceof Fish){
-                            return fishType;
-                        }
-                        return  null;
+                .typeResolver(env -> {
+                    if(env.getObject() instanceof Dog){
+                        return dogType;
+                    }if(env.getObject() instanceof Fish){
+                        return fishType;
                     }
+                    return  null;
                 })
                 .build();
 
 
-        DataFetcher<Object[]> animalsDataFetcher = environment -> {
-            return anmials;
-        };
         //定义查询query
         GraphQLObjectType queryType = newObject()
                 .name("animalQuery")
                 .field(newFieldDefinition()
                         .type(new GraphQLList(animalUnion))
                         .name("animals")
-                        .dataFetcher(animalsDataFetcher))
+                        .dataFetcher(evn -> {
+                            return anmials;
+                        }))
                 .build();
 
         GraphQLSchema schema = GraphQLSchema.newSchema()

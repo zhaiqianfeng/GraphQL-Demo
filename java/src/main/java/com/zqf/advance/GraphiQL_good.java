@@ -51,13 +51,6 @@ public class GraphiQL_good {
                 .build();
 
 
-        DataFetcher<User> userByIdDataFetcher = environment -> {
-            int id=environment.getArgument("id");
-            return users[id];
-        };
-        DataFetcher<User[]> usersDataFetcher = environment -> {
-            return users;
-        };
         //定义查询query
         GraphQLObjectType queryType = newObject()
                 .name("userQuery")
@@ -67,11 +60,16 @@ public class GraphiQL_good {
                         .argument(newArgument()
                                 .name("id")
                                 .type(new GraphQLNonNull(GraphQLInt)))
-                        .dataFetcher(userByIdDataFetcher))
+                        .dataFetcher(environment -> {
+                            int id=environment.getArgument("id");
+                            return users[id];
+                        }))
                 .field(newFieldDefinition()
                         .type(new GraphQLList(userType))
                         .name("users")
-                        .dataFetcher(usersDataFetcher))
+                        .dataFetcher(evn -> {
+                            return users;
+                        }))
                 .build();
 
         GraphQLSchema schema = GraphQLSchema.newSchema()
