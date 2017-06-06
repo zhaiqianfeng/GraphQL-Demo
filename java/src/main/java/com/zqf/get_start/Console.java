@@ -1,5 +1,6 @@
 package com.zqf.get_start;
 
+import com.zqf.model.User;
 import graphql.GraphQL;
 import graphql.schema.GraphQLObjectType;
 import graphql.schema.GraphQLSchema;

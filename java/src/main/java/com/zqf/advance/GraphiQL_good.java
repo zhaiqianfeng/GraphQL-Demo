@@ -1,6 +1,6 @@
 package com.zqf.advance;
 
-import com.zqf.get_start.User;
+import com.zqf.model.User;
 import graphql.GraphQL;
 import graphql.schema.*;
 

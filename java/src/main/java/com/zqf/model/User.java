@@ -1,4 +1,4 @@
-package com.zqf.get_start;
+package com.zqf.model;
 
 /**
  * Created by james on 6/6/17.
