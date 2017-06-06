@@ -39,6 +39,7 @@ const Unit=new GraphQLEnumType({
     description:"单位",
     values: {
         MM: {value: 'MM'},
+        cm: {value: 'cm'},
         mm: {value: 'mm'},
     }
 });
@@ -60,8 +61,10 @@ const User=new GraphQLObjectType({
                 resolve: function (user, {unit}) {
                     if (unit == 'MM') {
                         return user.stature/100;
-                    } else {
+                    } if (unit == 'cm') {
                         return user.stature;
+                    }else if (unit == 'mm') {
+                        return user.stature*10;
                     }
                 }
             },
