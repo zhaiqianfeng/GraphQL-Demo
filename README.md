@@ -1,4 +1,7 @@
-本代码用于博文演示：<a href="http://www.zhaiqianfeng.com/tags/GraphQL/" target="_blank">http://www.zhaiqianfeng.com/tags/GraphQL/</a>
+本代码用于博文演示
+* [GraphQL系列一快速入门教程](http://www.zhaiqianfeng.com/2017/06/learn-graphql-first-demo.html)
+* [GraphQL系列二数据类型](http://www.zhaiqianfeng.com/2017/06/learn-graphql-type-system.html)
+
 ```
 ├── java	java版本实现
 └── javascript	javascript版本实现
