@@ -1,2 +1,4 @@
 /javascript/node_modules/
 /java/build/
+/java/.gradle/
+/java/gradle/
