@@ -18,7 +18,7 @@ import static graphql.schema.GraphQLUnionType.newUnionType;
 
 /**
  * Created by zhaiqianfeng on 6/7/17.
- * 演示GraphQL api如何使用联合(union)
+ * 演示GraphQL api如何使用联合(union
  *
  * blog: www.zhaiqianfeng.com
  */

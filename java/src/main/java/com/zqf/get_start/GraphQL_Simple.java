@@ -13,7 +13,7 @@ import static graphql.schema.GraphQLObjectType.newObject;
 
 /**
  * Created by zhaiqianfeng on 6/7/17.
- * 使用默认的resolver简单演示GraphQL api
+ * 使用resolver简单演示GraphQL api
  *
  * blog: www.zhaiqianfeng.com
  */
@@ -34,6 +34,7 @@ public class GraphQL_Simple {
                 .field(newFieldDefinition().name("intro").type(GraphQLString))
                 .build();
 
+        //定义暴露给客户端的查询query api
         GraphQLObjectType queryType = newObject()
                 .name("userQuery")
                 .field(newFieldDefinition().type(userType).name("user").staticValue(user))

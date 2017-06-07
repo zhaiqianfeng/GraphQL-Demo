@@ -76,7 +76,7 @@ public class GraphQL_argument {
                         }))
                 .build();
 
-    //定义暴露给客户端的查询 mutaion api
+        //定义暴露给客户端的查询 mutaion api
         GraphQLObjectType mutaionType = newObject()//定义暴露给客户端的查询query api
                 .name("userMutation")
                 .field(newFieldDefinition()
@@ -104,7 +104,6 @@ public class GraphQL_argument {
                                         String[] skills=new String[skillsList.size()];
                                         userInfo.setSkills(skillsList.toArray(skills));
                                         break;
-
                                 }
                             }
                             users.add(userInfo);
