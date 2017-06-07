@@ -1,4 +1,9 @@
-// get-start/console.js
+/**
+ * Created by zhaiqianfeng on 6/5/17.
+ * 使用默认的resolver简单演示GraphQL api
+ *
+ * blog: www.zhaiqianfeng.com
+ */
 
 var { graphql, buildSchema } = require('graphql');
 

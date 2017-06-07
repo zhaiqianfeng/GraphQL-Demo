@@ -1,4 +1,9 @@
-// advance/GraphiQL-simple.js
+/**
+ * Created by zhaiqianfeng on 6/7/17.
+ * 演示使用GraphQL来定义类型构件GraphQL api
+ *
+ * blog: www.zhaiqianfeng.com
+ */
 
 var express = require('express');
 var graphqlHTTP = require('express-graphql');

@@ -1,5 +1,9 @@
-// advance/GraphiQL-interface.js
-
+/**
+ * Created by zhaiqianfeng on 6/5/17.
+ * 演示GraphQL api如何使用接口(interface)
+ *
+ * blog: www.zhaiqianfeng.com
+ */
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
 var {

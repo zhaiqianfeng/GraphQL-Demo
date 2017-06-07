@@ -1,4 +1,9 @@
-// advance/GraphiQL-good.js
+/**
+ * Created by zhaiqianfeng on 6/5/17.
+ * 演示如何传参数(argument)来调用GraphQL api
+ *
+ * blog: www.zhaiqianfeng.com
+ */
 
 var express = require('express');
 var graphqlHTTP = require('express-graphql');
