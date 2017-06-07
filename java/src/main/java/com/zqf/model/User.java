@@ -2,6 +2,9 @@ package com.zqf.model;
 
 /**
  * Created by james on 6/6/17.
+ * 为演示GraphQL创建的实体
+ *
+ * blog: www.zhaiqianfeng.com
  */
 public class User {
     private String sex;

@@ -15,10 +15,14 @@ import static graphql.schema.GraphQLInputObjectType.newInputObject;
 import static graphql.schema.GraphQLObjectType.newObject;
 
 /**
- * Created by james on 6/6/17.
+ * Created by zhaiqianfeng on 6/7/17.
+ * 演示如何传参数(argument)来调用GraphQL api
+ *
+ * blog: www.zhaiqianfeng.com
  */
-public class GraphiQL_good {
+public class GraphQL_argument {
     public static void main(String[] args) {
+        //服务端示例数据
         User user0=new User();
         user0.setName("zhaiqianfeng");
         user0.setSex("男");
@@ -31,9 +35,8 @@ public class GraphiQL_good {
 
         User[] users={user0,user1};
 
-
-        //定义User实体
-        GraphQLObjectType userType = newObject()
+        //定义GraphQL类型
+        GraphQLObjectType userType = newObject()//定义User类型
                 .name("User")
                 .field(newFieldDefinition().name("name").type(GraphQLString))
                 .field(newFieldDefinition().name("sex").type(GraphQLString))
@@ -41,8 +44,7 @@ public class GraphiQL_good {
                 .field(newFieldDefinition().name("skills").type(new GraphQLList(GraphQLString)))
                 .build();
 
-        //定于输入类型
-        GraphQLInputType userInput = newInputObject()
+        GraphQLInputType userInput = newInputObject()//定于输入类型
                 .name("UserInput")
                 .field(newInputObjectField().name("name").type(GraphQLString))
                 .field(newInputObjectField().name("sex").type(GraphQLString))
@@ -50,9 +52,7 @@ public class GraphiQL_good {
                 .field(newInputObjectField().name("skills").type(new GraphQLList(GraphQLString)))
                 .build();
 
-
-        //定义查询query
-        GraphQLObjectType queryType = newObject()
+        GraphQLObjectType queryType = newObject()//定义暴露给客户端的查询query api
                 .name("userQuery")
                 .field(newFieldDefinition()
                         .type(userType)
@@ -72,10 +72,12 @@ public class GraphiQL_good {
                         }))
                 .build();
 
+        //创建Schema
         GraphQLSchema schema = GraphQLSchema.newSchema()
                 .query(queryType)
                 .build();
 
+        //测试输出
         GraphQL graphQL = GraphQL.newGraphQL(schema).build();
 
         //根据Id查询用户
